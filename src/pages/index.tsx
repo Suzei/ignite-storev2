@@ -8,6 +8,7 @@ import { GetStaticProps } from "next"
 import Link from "next/link"
 import Head from "next/head"
 import { useShoppingCart } from 'use-shopping-cart'
+import { Cart } from "@/components/CartButton"
 
 interface ProductProps {
   products: {
@@ -19,11 +20,11 @@ interface ProductProps {
 }
 
 export default function Home({ products }: ProductProps) {
-  const { cartCount } = useShoppingCart();
+  const { addItem } = useShoppingCart();
 
   const [sliderRef] = useKeenSlider({
     slides: {
-      perView: 3,
+      perView: 2,
       spacing: 48,
 
     }
@@ -40,8 +41,12 @@ export default function Home({ products }: ProductProps) {
               <Image src={product.image} alt="" width={520} height={480} />
 
               <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
+                <div>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </div>
+
+                <Cart variant="product" />
               </footer>
             </Product>
           </Link>
