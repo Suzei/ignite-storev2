@@ -15,42 +15,13 @@ interface ProductProps {
         image: string,
         price: string,
         description: string;
-        defaultPriceId: string
+        price_id: string
     }
 }
 
 
 export default function Product({ product }: ProductProps) {
-    const { addItem, cartCount, totalPrice, cartDetails, clearCart } = useShoppingCart()
-    const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
-    async function handleBuyButton() {
-        try {
-            setIsCreatingCheckoutSession(true);
-
-            const response = await axios.post('/api/checkout', {
-                priceId: product.defaultPriceId,
-            })
-
-            const { checkoutUrl } = response.data;
-
-            window.location.href = checkoutUrl;
-        } catch (err) {
-            setIsCreatingCheckoutSession(false);
-
-            alert('Falha ao redirecionar ao checkout!')
-        }
-    }
-
-    async function handleAddToCart() {
-        addItem({
-            currency: 'BRL',
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            price_id: product.defaultPriceId
-        })
-    }
-
+    const { addItem } = useShoppingCart()
     return (
         <>
             <Head>
@@ -65,7 +36,7 @@ export default function Product({ product }: ProductProps) {
                     <h1>{product.name}</h1>
                     <span>{product.price}</span>
                     <p>{product.description}</p>
-                    <button disabled={isCreatingCheckoutSession} onClick={handleAddToCart}>Adicionar ao carrinho</button>
+                    <button onClick={() => addItem(product)}>Adicionar ao carrinho</button>
                 </ProductDetails>
             </ProductContainer>
         </>
@@ -108,7 +79,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
                     currency: 'BRL',
                 }).format(price.unit_amount! / 100,),
                 description: product.description,
-                defaultPriceId: price.id
+                price_id: price.id
             }
         },
         revalidate: 60 * 60 * 1

@@ -16,6 +16,7 @@ interface ProductProps {
     name: string,
     image: string,
     price: string,
+    price_id: string,
   }[]
 }
 
@@ -46,7 +47,7 @@ export default function Home({ products }: ProductProps) {
                   <span>{product.price}</span>
                 </div>
 
-                <Cart variant="product" />
+                <Cart variant="product" handleOnClick={() => addItem(product)} />
               </footer>
             </Product>
           </Link>
@@ -72,7 +73,8 @@ export const getStaticProps: GetStaticProps = async () => {
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-      }).format(price.unit_amount! / 100,)
+      }).format(price.unit_amount! / 100,),
+      price_id: price.id
 
     }
   })

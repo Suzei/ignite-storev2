@@ -33,6 +33,8 @@ export const ButtonContainer = styled('div', {
 
 export const PutOnCart = styled('button', {
     background: '$green500',
+    zIndex: '9999',
+    cursor: 'pointer',
     padding: '1rem',
     borderRadius: 6,
     border: 'none',

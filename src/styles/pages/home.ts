@@ -27,7 +27,8 @@ export const Product = styled('div', {
     footer: {
         div: {
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            zIndex: 9999
         },
 
         position: 'absolute',

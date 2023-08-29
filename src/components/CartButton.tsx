@@ -2,8 +2,7 @@ import { ButtonContainer, CartContainer, CartCount, PutOnCart } from "@/styles/p
 import { Handbag } from '@phosphor-icons/react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useShoppingCart } from 'use-shopping-cart'
-import { Content } from "./CartBox";
-import Image from "next/image";
+import { CartBox } from "./CartBox";
 interface CartProps {
     cartLenght?: number;
     variant: 'header' | 'product'
@@ -11,9 +10,7 @@ interface CartProps {
 }
 
 export function Cart({ handleOnClick, variant }: CartProps) {
-    const { cartCount, cartDetails, formattedTotalPrice, removeItem } = useShoppingCart()
-    const cartDetailsArray = Object.values(cartDetails)
-    console.log(formattedTotalPrice)
+    const { cartCount } = useShoppingCart()
     return (
         <>
             {variant === 'header' ? (
@@ -26,24 +23,7 @@ export function Cart({ handleOnClick, variant }: CartProps) {
                             </ButtonContainer>
                         </CartContainer>
                     </Dialog.Trigger>
-                    <Content>
-                        <h3>Sacola de compras</h3>
-                        {cartCount}
-
-
-                        {cartDetailsArray.map(item => (
-                            <div key={item.id}>
-                                <Image alt="" src={item.image} width={100} height={100} />
-                                {item.name}
-                                {item.price}
-                                {item.quantity}
-                                <button onClick={() => removeItem(item.id)} >Remove item</button>
-                            </div>
-                        ))}
-
-                    </Content>
-
-
+                    <CartBox />
                 </Dialog.Root>
             ) : (
                 <PutOnCart onClick={handleOnClick}>

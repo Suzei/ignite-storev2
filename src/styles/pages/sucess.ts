@@ -28,23 +28,34 @@ export const SucessContainer = styled('main', {
         fontWeight: 'bold',
         fontSize: '$lg',
         textDecoration: 'none'
+    },
+
+    div: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+
     }
 })
 
 export const ImageContainer = styled('div', {
     width: '100%',
     marginTop: '4rem',
-    maxWidth: 130,
-    height: 145,
+    maxWidth: 180,
+    height: 140,
     background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
-    padding: '0 0.25rem',
+    boxShadow: '0px 0px 60px 0px rgba(0, 0, 0, 0.80)',
+
+    padding: '0rem 0.307rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 9999,
+    marginLeft: '-20px',
 
     img: {
-        objectFit: 'cover'
+        objectFit: 'cover',
     }
 
 
