@@ -6,8 +6,10 @@ import Image from 'next/image';
 import { useShoppingCart } from 'use-shopping-cart'
 
 export function CartBox() {
-    const { removeItem, cartCount, formattedTotalPrice, cartDetails, clearCart } = useShoppingCart()
+    const { removeItem, cartCount, cartDetails, clearCart, formattedTotalPrice } = useShoppingCart()
     const cartItems = Object.values(cartDetails ?? {})
+    console.log(cartDetails)
+    console.log(formattedTotalPrice)
     async function handleBuyButton() {
         try {
 
@@ -41,7 +43,10 @@ export function CartBox() {
                                 </ImageContainer>
                                 <div>
                                     <h4>{product.name}</h4>
-                                    <strong>{product.price}</strong>
+                                    <strong>{new Intl.NumberFormat('pt-BR', {
+                                        currency: 'BRL',
+                                        style: 'currency'
+                                    }).format(product.price / 100)}</strong>
                                     <button onClick={() => removeItem(product.id)}>Remover</button>
                                 </div>
                             </CartItem>

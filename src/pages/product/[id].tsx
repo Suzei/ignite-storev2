@@ -1,11 +1,9 @@
 import { stripe } from "@/lib/stripe"
 import { ImageContainer, ProductContainer, ProductDetails } from "@/styles/pages/product"
-import axios from "axios"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
 import { useShoppingCart } from 'use-shopping-cart'
-import { useState } from "react"
 import Stripe from "stripe"
 
 interface ProductProps {
@@ -22,6 +20,7 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
     const { addItem } = useShoppingCart()
+    console.log(product.price_id)
     return (
         <>
             <Head>
@@ -34,7 +33,10 @@ export default function Product({ product }: ProductProps) {
 
                 <ProductDetails>
                     <h1>{product.name}</h1>
-                    <span>{product.price}</span>
+                    <span>{new Intl.NumberFormat('pt-BR', {
+                        currency: 'BRL',
+                        style: 'currency'
+                    }).format(product.price / 100)}</span>
                     <p>{product.description}</p>
                     <button onClick={() => addItem(product)}>Adicionar ao carrinho</button>
                 </ProductDetails>
@@ -66,6 +68,8 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
         expand: ['default_price']
     })
 
+    console.log(product)
+
     const price = product.default_price as Stripe.Price
 
     return {
@@ -74,12 +78,13 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
                 id: product.id,
                 name: product.name,
                 image: product.images[0],
-                price: new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                }).format(price.unit_amount! / 100,),
+                // price: new Intl.NumberFormat('pt-BR', {
+                //     style: 'currency',
+                //     currency: 'BRL',
+                // }).format(price.unit_amount! / 100,),
                 description: product.description,
-                price_id: price.id
+                price_id: price.id,
+                price: price.unit_amount
             }
         },
         revalidate: 60 * 60 * 1

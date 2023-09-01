@@ -15,7 +15,7 @@ export function Cart({ handleOnClick, variant }: CartProps) {
         <>
             {variant === 'header' ? (
                 <Dialog.Root>
-                    <Dialog.Trigger>
+                    <Dialog.Trigger name="Adicionar ao carrinho" style={{ cursor: 'pointer' }} asChild>
                         <CartContainer>
                             <ButtonContainer onClick={handleOnClick}>
                                 <Handbag size={24} weight="bold" />
